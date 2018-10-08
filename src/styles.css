@@ -9,6 +9,10 @@ label {
   font-weight: bold;
 }
 
+button {
+  margin-right: 4px;
+}
+
 @media (min-width: 1220px) {
   .container {
     width: 1170px;

@@ -1,0 +1,64 @@
+<div class="container">
+  <form>
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Nova Pessoa</h1>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input type="text" pInputText name="nome" #nome="ngModel" ngModel required>
+        <app-message [control]="nome" error="required" text="Esse campo é obrigatório"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-9 ui-fluid">
+        <label>Logradouro</label>
+        <input type="text" pInputText name="logradouro" #logradouro="ngModel" ngModel required>
+        <app-message [control]="logradouro" error="required" text="Esse campo é obrigatório"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Numero</label>
+        <input type="text" pInputText name="numero" #numero="ngModel" ngModel required>
+        <app-message [control]="numero" error="required" text="Esse campo é obrigatório"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Complemento</label>
+        <input type="text" pInputText name="complemento" #complemento="ngModel" ngModel="">
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Bairro</label>
+        <input type="text" pInputText name="bairro" #bairro="ngModel" ngModel required>
+        <app-message [control]="bairro" error="required" text="Esse campo é obrigatório"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>CEP</label>
+        <p-inputMask mask="99.999-999" ngModel name="cep" #cep="ngModel" required></p-inputMask>
+        <app-message [control]="cep" error="required" text="Esse campo é obrigatório"></app-message>
+
+      </div>
+
+      <div class="ui-g-12 ui-md-5 ui-fluid">
+        <label>Cidade</label>
+        <input type="text" pInputText name="cidade" #cidade="ngModel" ngModel required>
+        <app-message [control]="cidade" error="required" text="Esse campo é obrigatório"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-5 ui-fluid">
+        <label>Estado</label>
+        <input type="text" pInputText name="estado" #estado="ngModel" ngModel required>
+        <app-message [control]="estado" error="required" text="Esse campo é obrigatório"></app-message>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar"></button>
+        <button pButton type="button" label="Novo" class="ui-button-info"></button>
+        <a href="javascript:;">Voltar para a pesquisa</a>
+      </div>
+
+    </div>
+  </form>
+</div>
