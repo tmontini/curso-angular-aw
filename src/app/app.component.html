@@ -1,14 +1,4 @@
-<div class="container">
-  <div class="alert alert-primary" role="alert">
-    Funcionário adicionado: {{nome}}
-  </div>
-
-  <div class="form-group">
-    <label>Nome</label>
-    <input type="text" class="form-control" #nomeInput [value]="nome">
-  </div>
-
-  <button type="button" class="btn btn-primary"
-          (click)="adicionar(nomeInput.value)" [disabled]="nome.length == 0">Enviar</button>
-</div>
-
+<app-navbar></app-navbar>
+<app-lancamento-cadastro></app-lancamento-cadastro>
+<!--<app-lancamentos-pesquisa></app-lancamentos-pesquisa>-->
+<!--<app-pessoas-pesquisa></app-pessoas-pesquisa>-->
