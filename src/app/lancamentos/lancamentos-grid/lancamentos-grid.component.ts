@@ -16,9 +16,6 @@ export class LancamentosGridComponent {
 
   aoMudarPagina(event: LazyLoadEvent) {
     const pagina = event.first / event.rows;
-    console.log(`total de registros: ${this.totalRegistros}`);
-    console.log(event);
-    console.log(`a pagina no pesquisa-grid é ${pagina}`);
     this.mudarPagina.emit(pagina);
   }
 

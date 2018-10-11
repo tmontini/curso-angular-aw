@@ -25,19 +25,8 @@ export class LancamentosPesquisaComponent implements OnInit {
       .subscribe(resultado => {
         this.lancamentos = resultado.content;
         this.totalRegistros = resultado.totalElements;
-        console.log(this.totalRegistros);
       });
   }
-
-  // pesquisar(pagina = 0) {
-  //   this.filtro.page = pagina;
-  //   this.lancamentoService.pesquisar(this.filtro)
-  //     .then(resultado => {
-  //       this.lancamentos = resultado.content;
-  //       this.totalRegistros = resultado.totalElements;
-  //       console.log(this.totalRegistros);
-  //     });
-  // }
 
   aoMudarPagina(mudarPagina = 0) {
     this.pesquisar(mudarPagina);
