@@ -28,8 +28,8 @@ export class LancamentosPesquisaComponent implements OnInit {
       });
   }
 
-  aoMudarPagina(mudarPagina = 0) {
-    this.pesquisar(mudarPagina);
+  aoMudarPagina(pagina = 0) {
+    this.pesquisar(pagina);
   }
 
 }
