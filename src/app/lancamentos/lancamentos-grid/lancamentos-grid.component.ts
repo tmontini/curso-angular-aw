@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {LancamentoFiltro} from '../lancamento.service';
 import {LazyLoadEvent} from 'primeng/api';
 
@@ -13,10 +13,17 @@ export class LancamentosGridComponent {
   @Input() filtro = new LancamentoFiltro();
   @Input() totalRegistros: number;
   @Output() mudarPagina = new EventEmitter();
+  @Output() excluir = new EventEmitter();
+
+  @ViewChild('tabela') tabela;
 
   aoMudarPagina(event: LazyLoadEvent) {
     const pagina = event.first / event.rows;
     this.mudarPagina.emit(pagina);
+  }
+
+  aoExcluir(lancamento: any) {
+    this.excluir.emit({lancamento, 'tabela': this.tabela});
   }
 
 }
