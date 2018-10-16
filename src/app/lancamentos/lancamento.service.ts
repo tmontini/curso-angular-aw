@@ -3,8 +3,11 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 import * as moment from 'moment';
 
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {ErrorHandlerService} from '../core/error-handler.service';
+import {_throw} from 'rxjs-compat/observable/throw';
+
 
 export class LancamentoFiltro {
   descricao: string;
@@ -20,11 +23,11 @@ export class LancamentoService {
   lancamentoUrl = 'http://192.168.10.5:8081/lancamentos';
   // lancamentoUrl = 'http://localhost:8080/lancamentos';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private erroHandlerService: ErrorHandlerService) { }
 
   pesquisar(filtro: LancamentoFiltro): Observable<any> {
     // const headers = new HttpHeaders().append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbkBhbGdhbW9uZXkuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5vbWUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNTM5MjYxNDY5LCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiIwMTA0ZDI5OS0zZTJmLTQ5N2YtOWJiOC1kNTVkODFmNTZiMGIiLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.DNyw7-u3Ug3DQm2sAwD4U1AFeMNMZpPpezHgPvHLNOE');
-    const headers = new HttpHeaders().append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbkBhbGdhbW9uZXkuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5vbWUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNTM5NjI1NDM0LCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiI0MzY0NDdjYi03NDNlLTRlNmMtOGUzYy03NDQ4MDZlZmIwNmMiLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.mQiNHG7tR7ueveX-h89u8QGBqMIHR_GArR1ex3HkKV8');
+    const headers = new HttpHeaders().append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbkBhbGdhbW9uZXkuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5vbWUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNTM5NzIyNDgzLCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiI2YTE0MGEzMC0zZDRmLTRlNzItYjI5NC05OTNhYmZiYzA1NjciLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.AX3KH984s4XjjcJA05rVy_9wSFKBu4M-WvjbHfWDRhE');
     let params = new HttpParams().append('page', filtro.page.toString()).append('size', filtro.itensPorPagina.toString());
 
     if (filtro.descricao) {
@@ -38,13 +41,16 @@ export class LancamentoService {
     }
 
     return this.http.get(`${this.lancamentoUrl}?resumo`, { headers, params: params})
-      .pipe(map(response => response));
+      .pipe(
+        map(response => response),
+        catchError(err => _throw(err))
+      );
   }
 
   excluir(codigo: number): Observable<any> {
     const headers = new HttpHeaders().append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbkBhbGdhbW9uZXkuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5vbWUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNTM5NjI1NDM0LCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiI0MzY0NDdjYi03NDNlLTRlNmMtOGUzYy03NDQ4MDZlZmIwNmMiLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.mQiNHG7tR7ueveX-h89u8QGBqMIHR_GArR1ex3HkKV8');
 
-    return this.http.delete(`${this.lancamentoUrl}/${codigo}`, {headers }).pipe(map(() => null));
+    return this.http.delete(`${this.lancamentoUrl}/${codigo}`, {headers }).pipe(map(() => null), err => _throw(err));
   }
 
 }
