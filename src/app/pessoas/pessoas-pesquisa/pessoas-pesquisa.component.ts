@@ -31,7 +31,7 @@ export class PessoasPesquisaComponent implements  OnInit {
   pesquisar(pagina = 0) {
     this.filtro.page = pagina;
     this.pessoaService.pesquisar(this.filtro).subscribe(response => {
-      this.pessoas = response.content;
+      this.pessoas = response;
       this.totalRegistro = response.totalElements;
     },
       err => this.errorHandlerService.handle(err));
@@ -60,6 +60,18 @@ export class PessoasPesquisaComponent implements  OnInit {
         this.pesquisar();
       },
         err => this.errorHandlerService.handle(err));
+  }
+
+  alterarStatus(pessoa: any) {
+    const novoStatus = !pessoa.ativo;
+    const situacao = novoStatus ? 'ativado(a)' : 'desativado(a)';
+    this.pessoaService.alterarStatus(pessoa.codigo, novoStatus)
+      .subscribe(
+        () => {
+          this.toasty.success(`${pessoa.nome} ${situacao} com sucesso!`);
+        },
+        err => this.errorHandlerService.handle(err)
+      );
   }
 
 }
