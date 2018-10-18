@@ -31,7 +31,7 @@ export class PessoasPesquisaComponent implements  OnInit {
   pesquisar(pagina = 0) {
     this.filtro.page = pagina;
     this.pessoaService.pesquisar(this.filtro).subscribe(response => {
-      this.pessoas = response;
+      this.pessoas = response.content;
       this.totalRegistro = response.totalElements;
     },
       err => this.errorHandlerService.handle(err));
@@ -69,6 +69,7 @@ export class PessoasPesquisaComponent implements  OnInit {
       .subscribe(
         () => {
           this.toasty.success(`${pessoa.nome} ${situacao} com sucesso!`);
+          this.pesquisar();
         },
         err => this.errorHandlerService.handle(err)
       );

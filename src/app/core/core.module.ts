@@ -8,6 +8,8 @@ import {NavbarComponent} from './navbar/navbar.component';
 import {ErrorHandlerService} from './error-handler.service';
 import {LancamentoService} from '../lancamentos/lancamento.service';
 import {PessoaService} from '../pessoas/pessoa.service';
+import {SharedService} from '../shared/shared.service';
+import {CategoriaService} from '../categorias/categoria.service';
 
 @NgModule({
   imports: [
@@ -29,6 +31,8 @@ import {PessoaService} from '../pessoas/pessoa.service';
     ErrorHandlerService,
     LancamentoService,
     PessoaService,
+    SharedService,
+    CategoriaService,
 
     { provide: LOCALE_ID, useValue: 'pt' }
   ]

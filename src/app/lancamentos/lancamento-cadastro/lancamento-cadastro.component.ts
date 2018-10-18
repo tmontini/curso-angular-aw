@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {CategoriaService} from '../../categorias/categoria.service';
+import {ErrorHandlerService} from '../../core/error-handler.service';
+import {PessoaService} from '../../pessoas/pessoa.service';
+import {Lancamento} from '../../core/model';
+import {FormControl} from '@angular/forms';
+import {LancamentoService} from '../lancamento.service';
+import {ToastyService} from 'ng2-toasty';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -12,20 +19,51 @@ export class LancamentoCadastroComponent implements OnInit {
     {label: 'Despesa', value: 'DESPESA'},
   ];
 
-  categorias = [
-    {label: 'Alimentação', value: 1},
-    {label: 'Transporte', value: 2}
-  ];
+  categorias = [];
 
-  pessoas = [
-    {label: 'João da Silva', value: 1},
-    {label: 'Sebastião Souza', value: 2},
-    {label: 'Maria Abadia', value: 3}
-  ];
+  pessoas = [];
 
-  constructor() { }
+  lancamento = new Lancamento();
+
+  constructor(
+    private categoriaService: CategoriaService,
+    private pessoaService: PessoaService,
+    private lancamentoService: LancamentoService,
+    private toasty: ToastyService,
+    private errorHandlerService: ErrorHandlerService
+  ) { }
 
   ngOnInit() {
+    this.carregarCategorias();
+    this.carregarPessoas();
+  }
+
+  salvar(form: FormControl) {
+    this.lancamentoService.adicionar(this.lancamento)
+      .subscribe(() => {
+        this.toasty.success('Lançamento adicionado com sucesso!');
+        form.reset();
+      }, error => this.errorHandlerService.handle(error));
+  }
+
+  carregarCategorias() {
+    return this.categoriaService.listarTodas().subscribe(categorias => {
+      this.categorias = categorias.map(c => {
+        return {label: c.nome, value: c.codigo};
+      });
+    },
+      error => this.errorHandlerService.handle(error));
+  }
+
+  carregarPessoas() {
+    return this.pessoaService.listarTodas().subscribe(
+      pessoas => {
+        this.pessoas = pessoas.content.map(p => {
+          return {label: p.nome, value: p.codigo};
+        });
+      },
+      error => this.errorHandlerService.handle(error)
+    );
   }
 
 }

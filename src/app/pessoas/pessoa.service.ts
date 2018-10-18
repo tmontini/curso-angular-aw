@@ -16,14 +16,12 @@ export class PessoaFiltro {
 @Injectable()
 export class PessoaService {
 
-  // pessoaUrl = 'http://localhost:8080/pessoas';
-  pessoaUrl = 'http://192.168.10.5:8081/pessoas';
+  pessoaUrl = `${this.sharedService.server}/pessoas`;
 
   constructor(private http: HttpClient, private sharedService: SharedService) { }
 
   pesquisar(filtro: PessoaFiltro): Observable<any> {
-    console.log(filtro);
-    const headers = new HttpHeaders().append('Authorization', `Bearer ${this.sharedService.token}`);
+    const headers = new HttpHeaders().append('Authorization', this.sharedService.token);
     let params = new HttpParams().set('page', filtro.page.toString()).append('size', filtro.itensPorPagina.toString());
 
     if (filtro.nome) {
@@ -37,16 +35,26 @@ export class PessoaService {
       );
   }
 
+  listarTodas(): Observable<any> {
+    const headers = new HttpHeaders().append('Authorization', this.sharedService.token);
+    return this.http.get(this.pessoaUrl, {headers})
+      .pipe(
+        map(response => response),
+        catchError(err => _throw(err))
+      );
+  }
+
   excluir(codigo: number): Observable<any> {
-    const headers = new HttpHeaders().append('Authorization', `Bearer ${this.sharedService.token}`);
+    const headers = new HttpHeaders().append('Authorization', this.sharedService.token);
 
     return this.http.delete(`${this.pessoaUrl}/${codigo}`, { headers }).pipe(map(() => null), catchError(err => _throw(err)));
   }
 
   alterarStatus(codigo: number, ativo: boolean): Observable<any> {
 
-    const headers = new HttpHeaders().append('Authorization', `Bearer ${this.sharedService.token}`);
-    headers.append('Content-Type', 'application/json');
+    const headers = new HttpHeaders()
+      .append('Authorization', this.sharedService.token)
+      .append('Content-Type', 'application/json');
 
     return this.http.put(`${this.pessoaUrl}/${codigo}/ativo`, ativo, {headers})
       .pipe(
