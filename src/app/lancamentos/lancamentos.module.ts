@@ -18,6 +18,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {SharedModule} from '../shared/shared.module';
 import {MessageComponent} from '../shared/message/message.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import {MessageComponent} from '../shared/message/message.component';
     DropdownModule,
     CurrencyMaskModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    RouterModule
   ],
   declarations: [
     LancamentoCadastroComponent,

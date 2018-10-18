@@ -6,6 +6,7 @@ import {Lancamento} from '../../core/model';
 import {FormControl} from '@angular/forms';
 import {LancamentoService} from '../lancamento.service';
 import {ToastyService} from 'ng2-toasty';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -30,12 +31,14 @@ export class LancamentoCadastroComponent implements OnInit {
     private pessoaService: PessoaService,
     private lancamentoService: LancamentoService,
     private toasty: ToastyService,
-    private errorHandlerService: ErrorHandlerService
+    private errorHandlerService: ErrorHandlerService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.carregarCategorias();
     this.carregarPessoas();
+    console.log(this.route.snapshot.params);
   }
 
   salvar(form: FormControl) {
@@ -58,7 +61,7 @@ export class LancamentoCadastroComponent implements OnInit {
   carregarPessoas() {
     return this.pessoaService.listarTodas().subscribe(
       pessoas => {
-        this.pessoas = pessoas.content.map(p => {
+        this.pessoas = pessoas.map(p => {
           return {label: p.nome, value: p.codigo};
         });
       },

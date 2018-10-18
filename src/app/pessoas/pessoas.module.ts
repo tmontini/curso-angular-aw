@@ -18,6 +18,7 @@ import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
 import {MessageComponent} from '../shared/message/message.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import {MessageComponent} from '../shared/message/message.component';
     FormsModule,
     InputMaskModule,
     SharedModule,
+    RouterModule
   ],
   declarations: [
     PessoaCadastroComponent,
