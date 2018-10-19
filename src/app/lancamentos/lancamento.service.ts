@@ -65,4 +65,16 @@ export class LancamentoService {
     return this.http.delete(`${this.lancamentoUrl}/${codigo}`, {headers }).pipe(map(() => null), catchError(err => _throw(err)));
   }
 
+  atualizar(lancamento: Lancamento): Observable<Lancamento> {
+    return null;
+  }
+
+  buscarPorCodigo(codigo: number): Observable<Lancamento> {
+    return null;
+  }
+
+  converterStringsParaDatas(lancamentos: Lancamento[]) {
+
+  }
+
 }
