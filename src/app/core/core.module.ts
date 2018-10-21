@@ -11,6 +11,8 @@ import {PessoaService} from '../pessoas/pessoa.service';
 import {SharedService} from '../shared/shared.service';
 import {CategoriaService} from '../categorias/categoria.service';
 import {RouterModule} from '@angular/router';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
+import {Title} from '@angular/platform-browser';
 
 @NgModule({
   imports: [
@@ -20,7 +22,8 @@ import {RouterModule} from '@angular/router';
     RouterModule
   ],
   declarations: [
-    NavbarComponent
+    NavbarComponent,
+    PaginaNaoEncontradaComponent
   ],
   exports: [
     NavbarComponent,
@@ -29,6 +32,7 @@ import {RouterModule} from '@angular/router';
   ],
   providers: [
     ConfirmationService,
+    Title,
 
     ErrorHandlerService,
     LancamentoService,

@@ -25,11 +25,11 @@ registerLocaleData(localept, 'pt');
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AppRoutingModule,
     CoreModule,
-
     LancamentosModule,
-    PessoasModule
+
+    PessoasModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

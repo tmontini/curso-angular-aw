@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LancamentoFiltro, LancamentoService} from '../lancamento.service';
-import {ConfirmationService, LazyLoadEvent} from 'primeng/api';
+import {ConfirmationService} from 'primeng/api';
 import {Table} from 'primeng/table';
 import {ToastyService} from 'ng2-toasty';
-import {catchError} from 'rxjs/operators';
-import {of} from 'rxjs';
 import {ErrorHandlerService} from '../../core/error-handler.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -20,6 +19,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   tabela: Table;
 
   ngOnInit() {
+    this.title.setTitle('Pesquisa de Lançamentos');
     // this.aoMudarPagina();
   }
 
@@ -27,7 +27,8 @@ export class LancamentosPesquisaComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
-    private errorHandlerService: ErrorHandlerService
+    private errorHandlerService: ErrorHandlerService,
+    private title: Title
   ) {}
 
   pesquisar(pagina = 0) {

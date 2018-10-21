@@ -6,7 +6,7 @@ import {Lancamento} from '../../core/model';
 import {FormControl} from '@angular/forms';
 import {LancamentoService} from '../lancamento.service';
 import {ToastyService} from 'ng2-toasty';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -32,7 +32,8 @@ export class LancamentoCadastroComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private toasty: ToastyService,
     private errorHandlerService: ErrorHandlerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -44,6 +45,16 @@ export class LancamentoCadastroComponent implements OnInit {
 
     this.carregarCategorias();
     this.carregarPessoas();
+  }
+
+  novo(form: FormControl) {
+    form.reset();
+
+    setTimeout(function() {
+      this.lancamento = new Lancamento();
+    }.bind(this), 1);
+
+    this.router.navigate(['/lancamentos/novo']);
   }
 
   get editando() {
@@ -70,9 +81,10 @@ export class LancamentoCadastroComponent implements OnInit {
 
   adicionar(form: FormControl) {
     this.lancamentoService.adicionar(this.lancamento)
-      .subscribe(() => {
+      .subscribe(lancamentoAdicionado => {
         this.toasty.success('Lançamento adicionado com sucesso!');
-        form.reset();
+        // form.reset();
+        this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
       }, error => this.errorHandlerService.handle(error));
   }
 

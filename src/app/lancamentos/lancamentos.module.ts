@@ -17,8 +17,7 @@ import {TableModule} from 'primeng/table';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {SharedModule} from '../shared/shared.module';
-import {MessageComponent} from '../shared/message/message.component';
-import {RouterModule} from '@angular/router';
+import {LancamentoRoutingModule} from './lancamento.routing.module';
 
 @NgModule({
   imports: [
@@ -35,16 +34,13 @@ import {RouterModule} from '@angular/router';
     CurrencyMaskModule,
     FormsModule,
     SharedModule,
-    RouterModule
+    LancamentoRoutingModule
   ],
   declarations: [
     LancamentoCadastroComponent,
     LancamentosPesquisaComponent,
     LancamentosGridComponent,
   ],
-  exports: [
-    LancamentoCadastroComponent,
-    LancamentosPesquisaComponent
-  ]
+  exports: []
 })
 export class LancamentosModule { }

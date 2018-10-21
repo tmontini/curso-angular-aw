@@ -17,8 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
-import {MessageComponent} from '../shared/message/message.component';
-import {RouterModule} from '@angular/router';
+import {PessoasRoutingModule} from './pessoas.routing.module';
 
 @NgModule({
   imports: [
@@ -36,15 +35,12 @@ import {RouterModule} from '@angular/router';
     FormsModule,
     InputMaskModule,
     SharedModule,
-    RouterModule
+    PessoasRoutingModule
   ],
   declarations: [
     PessoaCadastroComponent,
     PessoasPesquisaComponent,
   ],
-  exports: [
-    PessoaCadastroComponent,
-    PessoasPesquisaComponent
-  ]
+  exports: []
 })
 export class PessoasModule { }

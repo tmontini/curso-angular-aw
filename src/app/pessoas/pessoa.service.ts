@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {_throw} from 'rxjs-compat/observable/throw';
 import {SharedService} from '../shared/shared.service';
+import {Pessoa} from '../core/model';
 
 
 export class PessoaFiltro {
@@ -61,5 +62,41 @@ export class PessoaService {
         map(() => null),
         catchError(err => _throw(err))
       );
+  }
+
+  adicionar(pessoa: Pessoa): Observable<Pessoa> {
+    const headers = new HttpHeaders()
+      .append('Authorization', this.sharedService.token)
+      .append('Content-Type', 'application/json');
+
+    return this.http.post(`${this.pessoaUrl}`, JSON.stringify(pessoa), {headers})
+      .pipe(
+        map(() => null),
+        catchError(err => _throw(err))
+      );
+  }
+
+  atualizar(pessoa: Pessoa): Observable<Pessoa> {
+    const headers = new HttpHeaders()
+      .append('Authorization', this.sharedService.token)
+      .append('Content-Type', 'application/json');
+
+    return this.http.put(`${this.pessoaUrl}/${pessoa.codigo}`, JSON.stringify(pessoa), {headers})
+      .pipe(
+        map(response => {
+          return response as Pessoa;
+        }),
+        catchError(err => _throw(err))
+      );
+  }
+
+  buscarPessoaPorCodigo(codigo: number): Observable<Pessoa> {
+    const headers = new HttpHeaders()
+      .append('Authorization', this.sharedService.token);
+
+    return this.http.get(`${this.pessoaUrl}/${codigo}`, {headers}).pipe(
+      map(response => response as Pessoa),
+      catchError(err => _throw(err))
+    );
   }
 }
